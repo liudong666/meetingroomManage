@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.StaffDao">
+
+	<!-- 根据id查询员工（已测试） -->
+	<select id="queryStaffById" resultType="staff"
+		parameterType="String">
+		select
+		*
+		from
+		staff
+		where staff_number = #{id}
+	</select>
+
+	<!-- 添加登录 -->
+	<insert id="addLogin">
+		insert into login
+			(staff_number,password) values
+			(#{staffNumber},#{password})
+	</insert>
+
+	<!-- 添加员工 -->
+	<insert id="addStaff">
+		insert into staff
+		(staff_number,name,department,position,phone) values
+		(#{staffNumber},#{name},#{department},#{position},#{phone})
+	</insert>
+
+	<!-- 修改员工 -->
+	<update id="modifyStaff">
+		update staff
+		set
+		name=#{name},phone=#{phone},birthday=#{birthday}
+		where
+		staff_number=#{id}
+	</update>
+
+	<!-- 修改个人信息 -->
+	<update id="modifyInfo">
+		update staff
+		set staff_number=#{newStaffNumber},name=#{newName},department=#{newDepartment},position=#{newPosition},birthday=#{newBirthday},phone=#{newPhone},address=#{newAddress},email=#{newEmail}
+		where staff_number=#{staffNumber}
+	</update>
+	
+	<!-- 查找所有员工 -->
+	<select id="queryAll" resultType="staff" parameterType="String">
+		select
+		*
+		from  staff
+	</select>
+	
+	<resultMap id="canBooked" type="dtoout.CanBooked" >
+	    <id property="canBookedId" column="can_book_id"/>
+	    <result property="roomNumber" column="room_number"/>
+		<result property="deviceName" column="name"/>
+	    <result property="capability" column="capability"/>
+	    <result property="startDate" column="start_date"/>
+	    <result property="endDate" column="end_date"/>
+	    <result property="startTime" column="start_time"/>
+	    <result property="endTime" column="end_time"/>
+	    
+  	</resultMap>
+	
+	
+	
+	<!-- queryAllCanBooked得到所有可预约时间段 -->
+	<select id="queryAllCanBooked" resultMap="canBooked" >
+		SELECT can_book_id,room_number,capability,attribute_type,NAME,start_date,end_date,start_time,end_time
+		FROM  can_book
+		NATURAL JOIN meetingroom
+		NATURAL JOIN device
+		WHERE can_book.`room_number` = device.`roomId`
+	</select>
+	
+	
+</mapper>

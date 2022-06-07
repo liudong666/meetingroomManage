@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.RoomDeviceDao">
+	<!-- 删除已有所有会议室设备 -->
+	<delete id="deleteRoomDevice">
+		delete from room_devices
+		where room_number =
+		#{roomNumber}
+	</delete>
+
+	<!-- 增加会议室设备 -->
+	<insert id="addRoomDevice">
+		insert into room_devices
+		(room_number,device_id,count)
+		values (#{roomNumber},#{deviceId},#{count})
+	</insert>
+
+</mapper>

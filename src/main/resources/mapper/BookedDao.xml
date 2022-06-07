@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.BookedDao">
+	<!-- 插入一条Booked表的记录 -->
+	<insert id="addBooked" >
+		insert into booked (staff_number,room_number)
+		values (#{staffNumber},#{roomNumber})
+	</insert>
+
+	<!-- 新增一个结果映射，当查询所有预约记录或根据员工号查询对应预约记录的时候，作结果映射 -->
+	<resultMap id="myRoom" type="dtoout.MyRoom" >
+		<result property="roomTitle" column="room_title"/>
+		<result property="startDate" column="start_date"/>
+		<result property="endDate" column="end_date"/>
+		<result property="startTime" column="start_time"/>
+		<result property="endTime" column="end_time"/>
+		<result property="status" column="status"/>
+		<result property="status" column="status"/>
+		<result property="creator" column="creator"/>
+		<result property="creatorPhone" column="creator_phone"/>
+	</resultMap>
+
+	<select id="getMeetingRoom" resultType="dtoout.MyRoom">
+		SELECT m.`room_title`,m.status,m.`start_date`,m.`start_time`,m.`end_date`,m.`end_time`,m.`creator`,m.`creator_phone`
+		FROM meetingroomreg m
+		WHERE room_number = #{roomNumber}
+	</select>
+</mapper>

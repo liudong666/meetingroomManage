@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.CanBookDao">
+	<!-- 根据canBookId获取一条可预约时间 -->
+	<select id="getById" resultType="dtoin.MyBookTime">
+		select
+		start_date,end_date,start_time,end_time from can_book where
+		can_book_id = #{canBookId}
+	</select>
+
+	<!-- 根据canBookId返回对应的roomNumber -->
+	<select id="getRoomNumberById" resultType="String">
+		select room_number
+		from can_book where can_book_id = #{canBookId}
+	</select>
+
+	<!-- 根据canBookId删除对应所有数据 -->
+	<delete id="deleteById">
+		delete from can_book where can_book_id = #{canBookId}
+	</delete>
+
+	<!-- 批量添加数据 -->
+	<insert id="batchInsert" parameterType="java.util.List">
+		insert into can_book (start_date,end_date,start_time,end_time,room_number)
+		values
+		<foreach collection="list" item="item" index="index"
+			separator=",">
+			(#{item.startDate},#{item.endDate},#{item.startTime},#{item.endTime},#{item.roomNumber})
+		</foreach>
+	</insert>
+</mapper>

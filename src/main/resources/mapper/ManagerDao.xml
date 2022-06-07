@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.ManagerDao">
+
+	<!-- 新增一个结果映射，当查询所有会议室或根据会议室号查询会议室的时候，作结果映射 ，此时用到一对多关联-->
+	<resultMap id="allRoom" type="dtoout.AllRoom" >
+	    <id property="roomNumber" column="room_number"/>
+	    <result property="capability" column="capability"/>
+		<result property="attributeType" column="attribute_type"/>
+	    <collection property="freetime" column="room_number" select="getFreeTime"/>
+	    <collection property="myDevice" column="room_number" select="getRoomDevice"/>
+  	</resultMap>	
+  	
+  	<!-- 获取所有会议室信息 -->
+	<select id="getAllRooms" resultMap="allRoom">
+		select room_number,capability,attribute_type
+		from meetingroom
+	</select>
+	
+	<!-- 根据会议室号获取该会议室信息 -->
+	<select id="searchRoomById" resultMap="allRoom">
+		select room_number,capability
+		from meetingroom
+		where room_number=#{room_number}
+	</select>
+  	  	
+  	 <!-- 作getFreeTime结果映射 -->
+  	<resultMap id="freeTime" type="dtoout.FreeTime" >
+	    <id property="startDate" column="start_date"/>
+	    <id property="endDate" column="end_date"/>
+	    <id property="startTime" column="start_time"/>
+	    <id property="endTime" column="end_time"/>
+  	</resultMap> 	
+  	  	
+  	<!-- 获取对应会议室号的多个空闲时间段-->
+	<select id="getFreeTime" resultMap="freeTime"
+		parameterType="String">
+		select start_date,end_date,start_time,end_time
+		from time_available
+		where room_number=#{room_number}
+	</select>
+  	
+  	<!-- 作getRoomDevice结果映射 -->
+  	<resultMap id="roomDevice" type="dtoout.MyDevice" >
+	    <id property="deviceId" column="device_id"/>
+	    <result property="count" column="count"/>
+	   <!--  此时对应设备有对应设备名，一对一映射 -->
+	    <association property="deviceName" column="device_id" select="getDevice"/>
+  	</resultMap>
+  	
+  	  	
+  	<!-- 获取对应会议室号的多个设备 -->
+	<select id="getRoomDevice" resultMap="roomDevice"
+		parameterType="String">
+		select device_id,count
+		from room_devices
+		where room_number=#{room_number}
+	</select>
+	
+	<!-- 获取对应设备的设备名 -->
+	<select id="getDevice" resultType="String"
+		parameterType="int">
+		select name
+		from device
+		where device_id=#{device_id}
+	</select>
+  	
+	<!-- 添加设备 -->
+	<insert id="addDevice">
+		insert into device (name,type) values
+		(#{name},#{type})
+	</insert>
+
+	<!-- 查看设备 -->
+	<select id="queryDeviceByName" resultType="device"
+		parameterType="String">
+		select device_id,name,type
+		from device
+		where name=#{name}
+	</select>
+
+
+	<!-- 修改设备 -->
+	<update id="modifyDevice">
+		update device
+		set name=#{name},type=#{type}
+		where
+		device_id=#{deviceId}
+	</update>
+
+
+	<!-- 删除设备 -->
+	<delete id="deleteFromDevice">
+		delete from device
+		where device_id=#{deviceId}
+	</delete>
+
+	<!-- 删除员工 -->
+	<delete id="deleteFromStaff">
+		delete from staff
+		where staff_number=#{staffNumber}
+	</delete>
+
+	<!-- 查看员工 -->
+	<select id="queryStaffByStaffNumber" resultType="staff"
+		parameterType="String">
+		select staff_number,name,department,position,phone
+		from
+		staff
+		where staff_number=#{staffNumber}
+	</select>
+
+	<!-- 新增一个结果映射，当查询所有预约记录或根据员工号查询对应预约记录的时候，作结果映射 -->
+	<resultMap id="allBooked" type="dtoout.AllBooked" >
+	    <id property="staffNumber" column="staff_number"/>
+		<id property="timeBookedId" column="time_booked_id"/>
+	    <id property="roomNumber" column="room_number"/>
+		<id property="startDate" column="start_date"/>
+		<id property="endDate" column="end_date"/>
+		<id property="startTime" column="start_time"/>
+		<id property="endTime" column="end_time"/>
+	    <result property="status" column="status"/>
+		<result property="creatorPhone" column="creator_phone"/>
+	    <!--  此时对应会议室的容量，一对一映射 -->
+	    <association property="capability" column="room_number" select="getCapability"/>
+	    <!--  此时对应员工的多条预约记录，一对多映射 -->
+	    <collection property="bookedTime" column="time_booked_id" select="getBookedTime"/>
+  		
+  	</resultMap>
+  	
+  	 <!-- 查看个人所有预约记录 -->
+	<select id="getPersonalBooked" resultMap="allBooked">
+		SELECT time_booked_id,staff_number,room_number,attribute_type,room_title,creator,compere,leader_join,dep_join,creator_phone,STATUS,start_date,end_date,start_time,end_time
+		FROM meetingroomreg
+				 NATURAL JOIN meetingroom
+		WHERE staff_number=#{staffNumber}
+		ORDER BY start_date DESC
+	</select>
+
+	
+	<!-- 获取全部的所有预约记录MyRoom -->
+	<select id="getAllBooked" resultMap="allBooked">
+		SELECT time_booked_id,staff_number,room_number,attribute_type,room_title,creator,compere,leader_join,dep_join,creator_phone,STATUS,start_date,end_date,start_time,end_time
+		FROM meetingroomreg
+				 NATURAL JOIN meetingroom
+		ORDER BY start_date DESC,room_number
+		LIMIT 100;
+	</select>
+
+	<!-- 更改指定预约1 -->
+	<update id="updateBookedById">
+		update booked
+		set status=#{status}
+		where
+			time_Booked_Id=#{timeBookedId}
+	</update>
+
+	<!-- 更改指定预约2 -->
+	<update id="updateMrrById">
+		update meetingroomreg
+		set status=#{status}
+		where
+			time_Booked_Id=#{timeBookedId}
+	</update>
+  	
+  	<!-- 获取对应会议室的容量 -->
+	<select id="getCapability" resultType="int"
+		parameterType="String">
+		select capability
+		from meetingroom
+		where room_number=#{roomNumber}
+	</select>	 
+	
+	<!-- 作getBookedTime结果映射 -->
+  	<resultMap id="bookedTime" type="dtoout.BookedTime" >
+	    <result property="startDate" column="start_date"/>
+	    <result property="endDate" column="end_date"/>
+	    <result property="startTime" column="start_time"/>
+	    <result property="endTime" column="end_time"/>
+  	</resultMap> 	
+  	  	
+  	<!-- 获取对应预约记录的预约时间段-->
+	<select id="getBookedTime" resultMap="bookedTime"
+		parameterType="int">
+		select start_date,end_date,start_time,end_time
+		from time_booked
+		where time_booked_id=#{time_booked_id}
+	</select>
+	
+	<!-- 根据会议室number删除会议室 -->
+	<delete id="deleteRoomById" parameterType="String">
+		delete from meetingroom
+		where room_number=#{roomNumber}
+	</delete>
+
+	<!-- 查看当前预约记录 -->
+	<select id="queryBookingByRoomNumber"
+		resultType="dtoout.MyBooked" parameterType="String">
+		select
+		name,staff_number,room_number,start_date,end_date,start_time,end_time
+		from booked natural join time_booked natural join staff
+		where
+		room_number=#{roomNumber}
+	</select>
+
+	<!-- 查看历史预约记录 -->
+	<select id="queryBookedByRoomNumber"
+		resultType="dtoout.MyBooked" parameterType="String">
+		select
+		name,staff_number,room_number,start_date,end_date,start_time,end_time
+		from booked natural join time_booked natural join staff
+		where
+		room_number=#{roomNumber}
+	</select>
+
+	<!-- 新增会议室 （已测试） -->
+	<insert id="addMeetingRoom" >
+		insert into meetingroom (room_number,capability,attribute_type)
+		values
+		(#{roomNumber},#{capability},#{attributeType})
+	</insert>
+
+	<!-- 修改会议室可容纳人数 -->
+	<update id="modifyCapability">
+		update meetingroom
+		set capability=#{capability}
+		where
+		room_number=#{roomNumber}
+	</update>
+
+	<!-- 修改时间 -->
+	<update id="modifyTimeAvailable">
+		update time_available
+		set
+		start_date=#{startDate},end_date=#{endDate},start_time=#{startTime},end_time=#{endTime}
+		where room_number=#{roomNumber}
+	</update>
+
+	<!-- 修改设备 -->
+	<update id="modifyRoomDevice">
+		update room_device
+		set count=#{count}
+		where
+		room_number=#{roomNumber} and dcevice_id=#{deviceId}
+	</update>
+
+	<!-- 查看会议室信息 -->
+	<select id="queryRoomByRoomNumber" resultType="dtoout.MyRoom"
+		parameterType="String">
+		select
+		room_number,capability,start_date,end_date,start_time,end_time,device.name,count
+		from meetingroom natural join time_available natural join room_devices
+		natural join device
+		where room_number=#{roomNumber}
+	</select>
+
+	<!-- 删除会议室空闲时间（已测试) -->
+	<delete id="deleteFreeTime" parameterType="String">
+		delete from
+		time_available where room_number = #{roomNumber}
+	</delete>
+
+	<!-- 增加会议室空闲时间 （已测试)-->
+	<insert id="addFreeTime">
+		insert into time_available
+		(room_number,start_date,end_date,start_time,end_time) values
+		(#{roomNumber},#{startDate},#{endDate},#{startTime},#{endTime})
+	</insert>
+
+	<!-- 添加会议室可预约时间 -->
+	<insert id="addCanTime">
+		insert into can_book
+			(room_number,start_date,end_date,start_time,end_time) values
+			(#{roomNumber},#{startDate},#{endDate},#{startTime},#{endTime})
+	</insert>
+
+
+</mapper>

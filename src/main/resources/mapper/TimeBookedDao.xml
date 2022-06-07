@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.TimeBookedDao">
+	<!-- 插入一条新记录 -->
+	<insert id="addTimeBooked">
+		insert into time_booked
+		(time_booked_id, start_date, end_date, start_time, end_time)
+		values
+		(#{timeBookedId}, #{startDate}, #{endDate}, #{startTime}, #{endTime})
+	</insert>
+
+	<!--往meetingroomreg插入一条新纪录-->
+	<insert id="updateMeetingRoomReg">
+		insert into meetingroomreg
+			(staff_number, room_number, room_title, creator, compere, leader_join, dep_join, creator_phone,start_date,end_date,start_time,end_time)
+		values
+			(#{staffNumber}, #{roomNumber}, #{roomTitle}, #{proposer}, #{roomCompere}, #{roomLeader}, #{roomDepartment}, #{proposerPhone}, #{startDate}, #{endDate}, #{startTime}, #{endTime})
+	</insert>
+
+	<!--往meetingroomreg修改一条记录-->
+	<update id="modifyMeetingRoomReg">
+		update meetingroomreg
+		set room_title=#{roomTitle},creator=#{proposer},compere=#{roomCompere},leader_join=#{roomLeader},dep_join=#{roomDepartment},creator_phone=#{proposerPhone},start_date=#{startDate},end_date=#{endDate},start_time=#{startTime},end_time=#{endTime}
+		where
+			time_booked_id=#{timeBookedId}
+	</update>
+</mapper>

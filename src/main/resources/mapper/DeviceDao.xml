@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.DeviceDao">
+
+	<!-- 添加设备 -->
+	<insert id="addDevice">
+		insert into device (name,type) values (#{name},#{type});
+	</insert>
+
+	<!-- 查看设备 -->
+	<select id="queryDeviceByName" resultType="device"
+		parameterType="String">
+		select device_id,name,type
+		from device
+		where name like %#{name}%
+	</select>
+
+
+	<!-- 修改设备 -->
+	<update id="modifyDevice">
+		update device
+		set name=#{name},type=#{type}
+		where device_id=#{device_id}
+	</update>
+	
+	<!-- 得到所有设备 queryAllDevices-->
+	<select id="queryAllDevices" resultType="device" parameterType="String">
+		select device_id,name,type
+		from device
+	</select>
+	
+	<!-- deleteDeviceById删除设备 -->
+	<delete id="deleteDeviceById">
+		delete from device
+		where device_id=#{deviceId}
+	</delete>
+	
+</mapper>

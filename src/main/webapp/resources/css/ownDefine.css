@@ -1,0 +1,6 @@
+﻿.owndefineP{
+	/*  z-index: 999; */
+	 /* style :cursor:pointer; */
+	 data-toggle:modal;
+	  data-target:#showDeviceDetailPop;
+}
