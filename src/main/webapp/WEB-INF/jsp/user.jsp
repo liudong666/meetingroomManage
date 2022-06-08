@@ -212,7 +212,7 @@
                                         </div>
                                         <%--参会领导--%>
                                         <div class="form-group ">
-                                            <label for="roomLeader" class="col-xs-3 control-label">厂级领导：</label>
+                                            <label for="roomLeader" class="col-xs-3 control-label">领导：</label>
                                             <div class="col-xs-6 ">
                                                 <input type="text" class="form-control input-sm duiqi"
                                                        id="roomLeader">
@@ -312,7 +312,7 @@
                             <th class="col-xs-1">申请人</th>
                             <th class="col-xs-1">联系电话</th>
                             <th class="col-xs-1">主持人</th>
-                            <th class="col-xs-1">厂级领导</th>
+                            <th class="col-xs-1">领导</th>
                             <th class="col-xs-2">参会部门</th>
                             <th class="col-xs-2">预约时间</th>
                             <th class="col-xs-1">状态</th>
@@ -324,137 +324,6 @@
                     </table>
                 </div>
 
-                <%--取消弹出窗口 <th class="col-xs-1">更改</th>--%>
-<%--                <div class="modal fade" id="cancelPop" role="dialog" aria-labelledby="gridSystemModalLabel">--%>
-<%--                    <div class="modal-dialog" role="document">--%>
-<%--                        <div class="modal-content">--%>
-<%--                            <div class="modal-header">--%>
-<%--                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span--%>
-<%--                                        aria-hidden="true">&times;</span></button>--%>
-<%--                                <h4 class="modal-title">提示</h4>--%>
-<%--                            </div>--%>
-<%--                            <div class="modal-body">--%>
-<%--                                <div class="container-fluid">--%>
-<%--                                    确定要取消该会议室？取消后后不可恢复！--%>
-<%--                                </div>--%>
-<%--                            </div>--%>
-<%--                            <div class="modal-footer">--%>
-<%--                                <button type="button" class="btn btn-xs btn-white" data-dismiss="modal">取 消</button>--%>
-<%--                                <button type="button" class="btn  btn-xs btn-danger" data-dismiss="modal"--%>
-<%--                                        id="confirmCancelDevice">确定--%>
-<%--                                </button>--%>
-<%--                            </div>--%>
-<%--                        </div>--%>
-<%--                        <!-- /.modal-content -->--%>
-<%--                    </div>--%>
-<%--                    <!-- /.modal-dialog -->--%>
-<%--                </div>--%>
-
-                <%--修改弹出窗口--%>
-<%--                <div class="modal fade" id="modifyAll" role="dialog" aria-labelledby="gridSystemModalLabel">--%>
-<%--                    <div class="modal-dialog" role="document">--%>
-<%--                        <div class="modal-content">--%>
-<%--                            <div class="modal-header">--%>
-<%--                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span--%>
-<%--                                        aria-hidden="true">&times;</span></button>--%>
-<%--                                <h4 class="modal-title">修改信息</h4>--%>
-<%--                            </div>--%>
-<%--                            <div class="modal-body">--%>
-<%--                                <div class="modal-body">--%>
-<%--                                    <div class="container-fluid">--%>
-<%--                                        <form class="form-horizontal">--%>
-<%--                                            <div class="form-group ">--%>
-<%--                                                <label for="roomTitle_1"--%>
-<%--                                                       class="col-xs-3 control-label">会议名：</label>--%>
-<%--                                                <div class="col-xs-6 ">--%>
-<%--                                                    <input type="text" class="form-control input-sm duiqi"--%>
-<%--                                                           id="roomTitle_1" placeholder="">--%>
-<%--                                                </div>--%>
-<%--                                            </div>--%>
-<%--                                            <div class="form-group ">--%>
-<%--                                                <label for="creator_1"--%>
-<%--                                                       class="col-xs-3 control-label">申请人：</label>--%>
-<%--                                                <div class="col-xs-6 ">--%>
-<%--                                                    <input type="text" class="form-control input-sm duiqi"--%>
-<%--                                                           id="creator_1" placeholder="">--%>
-<%--                                                </div>--%>
-<%--                                            </div>--%>
-<%--                                            <div class="form-group ">--%>
-<%--                                                <label for="compere_1"--%>
-<%--                                                       class="col-xs-3 control-label">主持人：</label>--%>
-<%--                                                <div class="col-xs-6 ">--%>
-<%--                                                    <input type="text" class="form-control input-sm duiqi"--%>
-<%--                                                           id="compere_1" placeholder="">--%>
-<%--                                                </div>--%>
-<%--                                            </div>--%>
-<%--                                            <div class="form-group ">--%>
-<%--                                                <label for="leaderJoin_1"--%>
-<%--                                                       class="col-xs-3 control-label">厂级领导：</label>--%>
-<%--                                                <div class="col-xs-6 ">--%>
-<%--                                                    <input type="text" class="form-control input-sm duiqi"--%>
-<%--                                                           id="leaderJoin_1" placeholder="">--%>
-<%--                                                </div>--%>
-<%--                                            </div>--%>
-<%--                                            <div class="form-group ">--%>
-<%--                                                <label for="depJoin_1"--%>
-<%--                                                       class="col-xs-3 control-label">参会部门：</label>--%>
-<%--                                                <div class="col-xs-6 ">--%>
-<%--                                                    <input type="text" class="form-control input-sm duiqi"--%>
-<%--                                                           id="depJoin_1" placeholder="">--%>
-<%--                                                </div>--%>
-<%--                                            </div>--%>
-<%--                                            <div class="form-group ">--%>
-<%--                                                <label for="creatorPhone_1"--%>
-<%--                                                       class="col-xs-3 control-label">联系方式：</label>--%>
-<%--                                                <div class="col-xs-6 ">--%>
-<%--                                                    <input type="text" class="form-control input-sm duiqi"--%>
-<%--                                                           id="creatorPhone_1" placeholder="">--%>
-<%--                                                </div>--%>
-<%--                                            </div>--%>
-<%--                                            <div class="form-group ">--%>
-<%--                                                <label for="startDateBooked_1" class="col-xs-3 control-label">开始日期：</label>--%>
-<%--                                                <div class="col-xs-6 ">--%>
-<%--                                                    <input type="text" class="form-control input-sm duiqi "--%>
-<%--                                                           id="startDateBooked_1">--%>
-<%--                                                </div>--%>
-<%--                                            </div>--%>
-<%--                                            <div class="form-group ">--%>
-<%--                                                <label for="endDateBooked_1" class="col-xs-3 control-label">结束日期：</label>--%>
-<%--                                                <div class="col-xs-6 ">--%>
-<%--                                                    <input type="text" class="form-control input-sm duiqi "--%>
-<%--                                                           id="endDateBooked_1">--%>
-<%--                                                </div>--%>
-<%--                                            </div>--%>
-<%--                                            <div class="form-group ">--%>
-<%--                                                <label for="startTimeBooked_1" class="col-xs-3 control-label">开始时间：</label>--%>
-<%--                                                <div class="col-xs-6 ">--%>
-<%--                                                    <input type="text" class="form-control input-sm duiqi "--%>
-<%--                                                           id="startTimeBooked_1" >--%>
-<%--                                                </div>--%>
-<%--                                            </div>--%>
-<%--                                            <div class="form-group ">--%>
-<%--                                                <label for="endTimeBooked_1" class="col-xs-3 control-label">结束时间：</label>--%>
-<%--                                                <div class="col-xs-6 ">--%>
-<%--                                                    <input type="text" class="form-control input-sm duiqi "--%>
-<%--                                                           id="endTimeBooked_1" >--%>
-<%--                                                </div>--%>
-<%--                                            </div>--%>
-<%--                                        </form>--%>
-<%--                                    </div>--%>
-<%--                                </div>--%>
-<%--                            </div>--%>
-<%--                            <div class="modal-footer">--%>
-<%--                                <button type="button" class="btn btn-xs btn-white" data-dismiss="modal">取消修改</button>--%>
-<%--                                <button type="button" class="btn  btn-xs btn-danger" data-dismiss="modal"--%>
-<%--                                        id="confirmCancelDevice_1">确定修改--%>
-<%--                                </button>--%>
-<%--                            </div>--%>
-<%--                        </div>--%>
-<%--                        <!-- /.modal-content -->--%>
-<%--                    </div>--%>
-<%--                    <!-- /.modal-dialog -->--%>
-<%--                </div>--%>
-                <!-- /.modal -->
             </div>
 
             <!-- 查看个人预约记录 -->
@@ -485,7 +354,7 @@
                             <th class="col-xs-1">申请人</th>
                             <th class="col-xs-1">联系电话</th>
                             <th class="col-xs-1">主持人</th>
-                            <th class="col-xs-1">厂级领导</th>
+                            <th class="col-xs-1">领导</th>
                             <th class="col-xs-2">参会部门</th>
                             <th class="col-xs-2">预约时间</th>
                             <th class="col-xs-1">状态</th>
